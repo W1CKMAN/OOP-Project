@@ -1,0 +1,10 @@
+I have an assignment, here is the description of that:
+CareCare is a vehicle Reparing and Maintenance company which sells spare parts, repair vehicles, and repaint cars. Currently their entire business process is operated with an excel sheet and emails. As a startup company your group has been hired to automate the manual process of  Car Care. The following main business requirements have been discussed by the client. Implement a java Swing Application to automate the business requirements.
+1.	Manage Customer Orders (Add,Update,Remove)
+2.	Manage Suppliers (Add,Update,Remove)
+3.	Manage Inventory.
+4.	Manage Employees in the organization.
+5.	Allocate Employees to Customer Jobs.
+6.	Monthly Reports related to sales.
+7.	Send notification to the Customers when the customerOrder Vehicle is ready to be collect.
+8.	Send notification to Employees when a new order Job has been allocated via email.
