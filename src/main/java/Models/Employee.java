@@ -1,49 +1,55 @@
 package Models;
 
 public class Employee {
-    private int employeeId;
-    private String firstName;
-    private String lastName;
-    private String position;
+    private static int nextempid = 1;
+    private int empid;
+    private String empName;
+    private String mobile;
+    private String salary;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String position) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.position = position;
+    public Employee(String empName, String mobile, String salary) {
+        this.empid = nextempid++;
+        this.empName = empName;
+        this.mobile = mobile;
+        this.salary = salary;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public int getempid() {
+        return empid;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setempid(int empid) {
+        this.empid = empid;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getempName() {
+        return empName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setempName(String empName) {
+        this.empName = empName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getmobile() {
+        return mobile;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setmobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getPosition() {
-        return position;
+    public String getsalary() {
+        return salary;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setsalary(String salary) {
+        this.salary = salary;
+    }
+
+    public static int getNextempid() {
+        return nextempid;
     }
 }
