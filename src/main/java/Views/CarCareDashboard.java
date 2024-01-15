@@ -10,28 +10,14 @@ public class CarCareDashboard extends JFrame {
     private JButton supplierManagerButton;
     private JButton inventoryManagerButton;
     private JButton jobsManagerButton;
+    private JPanel DashPanel;
 
     public CarCareDashboard() {
-        // Initialize your buttons here
-        orderManagerButton = new JButton("Order Manager");
-        employeeManagerButton = new JButton("Employee Manager");
-        customerDetailsManagerButton = new JButton("Customer Details Manager");
-        supplierManagerButton = new JButton("Supplier Manager");
-        inventoryManagerButton = new JButton("Inventory Manager");
-        jobsManagerButton = new JButton("Jobs Manager");
-
-        // Add buttons to layout
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        add(orderManagerButton);
-        add(employeeManagerButton);
-        add(customerDetailsManagerButton);
-        add(supplierManagerButton);
-        add(inventoryManagerButton);
-        add(jobsManagerButton);
-
-        // Set frame properties
-        pack();
+        setTitle("Car Care Dashboard");
+        setMinimumSize(new java.awt.Dimension(500, 500));
+        setContentPane(DashPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
         setVisible(true);
     }
 
@@ -58,4 +44,5 @@ public class CarCareDashboard extends JFrame {
     public void addJobsManagerButtonListener(ActionListener listenForButton) {
         jobsManagerButton.addActionListener(listenForButton);
     }
+    
 }

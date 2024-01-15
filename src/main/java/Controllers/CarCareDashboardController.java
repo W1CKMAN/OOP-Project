@@ -18,39 +18,39 @@ public class CarCareDashboardController {
             }
         });
 
-        // this.dashboard.addJobsManagerButtonListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         new JobsManagerView().setVisible(true);
-        //     }
-        // });
+//         this.dashboard.addJobsManagerButtonListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 new JobsManagerView().setVisible(true);
+//             }
+//         });
 
-        // this.dashboard.addcustomerDetailsManagerButtonListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         new CustomerDetailsManagerView().setVisible(true);
-        //     }
-        // });
+         this.dashboard.addcustomerDetailsManagerButtonListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 new CustomerView(null).setVisible(true);
+             }
+         });
 
-        // this.dashboard.addSupplierManagerButtonListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         new SupplierManagerView().setVisible(true);
-        //     }
-        // });
-
-        // this.dashboard.addInventoryManagerButtonListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         new InventoryManagerView().setVisible(true);
-        //     }
-        // });
-
-        // this.dashboard.addEmployeeManagerButtonListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         new EmployeeManagerView().setVisible(true);
-        //     }
-        // });
+//         this.dashboard.addSupplierManagerButtonListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 new SupplierManagerView().setVisible(true);
+//             }
+//         });
+//
+//         this.dashboard.addInventoryManagerButtonListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 new InventoryManagerView().setVisible(true);
+//             }
+//         });
+//
+//         this.dashboard.addEmployeeManagerButtonListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 new EmployeeManagerView().setVisible(true);
+//             }
+//         });
     }
 }
