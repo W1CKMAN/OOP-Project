@@ -12,7 +12,7 @@ public class DatabaseLayer {
     private static final String PASSWORD = "";
 
     public static int saveOrder(CustomerOrder order) {
-        String sql = "INSERT INTO Orders (customer_id, order_date, vehicle_model, status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Orders (customer_id, order_date, vehicle_model, vehicle_number, status) VALUES (?, ?, ?, ?, ?)";
         int orderId = 0;
 
         try (
@@ -22,7 +22,8 @@ public class DatabaseLayer {
             preparedStatement.setInt(1, order.getCustomerId());
             preparedStatement.setDate(2, new java.sql.Date(order.getOrderDate().getTime()));
             preparedStatement.setString(3, order.getVehicleModel());
-            preparedStatement.setString(4, order.getStatus());
+            preparedStatement.setString(4, order.getVehicleNumber());  // Set the vehicle number
+            preparedStatement.setString(5, order.getStatus());
 
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -41,16 +42,17 @@ public class DatabaseLayer {
     }
 
     public static void updateOrder(CustomerOrder order) {
-        String sql = "UPDATE Orders SET customer_id=?, vehicle_model=?, status=? WHERE order_id=?";
+        String sql = "UPDATE Orders SET customer_id=?, vehicle_model=?, vehicle_number=?, status=? WHERE order_id=?";
 
         try (
             Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
             preparedStatement.setInt(1, order.getCustomerId());
-            preparedStatement.setString(2, order.getVehicleModel());  // Change the index to 2
-            preparedStatement.setString(3, order.getStatus());  // Change the index to 3
-            preparedStatement.setInt(4, order.getOrderId());  // Change the index to 4
+            preparedStatement.setString(2, order.getVehicleModel());
+            preparedStatement.setString(3, order.getVehicleNumber());  // Set the vehicle number
+            preparedStatement.setString(4, order.getStatus());
+            preparedStatement.setInt(5, order.getOrderId());  // Change the index to 5
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -20,7 +20,7 @@ public class OrderManagementView extends JDialog {
     private JButton searchButton;
     private JComboBox statusComboBox;
     private JPanel ManagementPanel;
-    private JTextField textField1;
+    private JTextField vehicleNumberField;
     private JButton clearButton;
 
 
@@ -51,9 +51,10 @@ public class OrderManagementView extends JDialog {
                 }
 
                 String vehicleModel = vehicleModelField.getText();
+                String vehicleNumber = vehicleNumberField.getText(); 
                 String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();
                 Date orderDate = new Date();
-                CustomerOrder newOrder = new CustomerOrder(0, customerId, orderDate, vehicleModel, status);
+                CustomerOrder newOrder = new CustomerOrder(0, customerId, orderDate, vehicleModel, vehicleNumber, status);  
                 int newOrderId = DatabaseLayer.saveOrder(newOrder);
                 JOptionPane.showMessageDialog(null, "New order id: " + newOrderId);
             }
@@ -65,12 +66,10 @@ public class OrderManagementView extends JDialog {
                 int orderId = Integer.parseInt(orderIdField.getText());
                 int customerId = Integer.parseInt(customerIdField.getText());
                 String vehicleModel = vehicleModelField.getText();
-                String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();  // Get the selected status
-
-                // Get the current date
+                String vehicleNumber = vehicleNumberField.getText(); 
+                String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();
                 Date orderDate = new Date();
-
-                CustomerOrder updatedOrder = new CustomerOrder(orderId, customerId, orderDate, vehicleModel, status);
+                CustomerOrder updatedOrder = new CustomerOrder(orderId, customerId, orderDate, vehicleModel, vehicleNumber, status);
                 DatabaseLayer.updateOrder(updatedOrder);
             }
         });
@@ -108,6 +107,4 @@ public class OrderManagementView extends JDialog {
     public static void main(String[] args) {
         new OrderManagementView(new JFrame());
     }
-    
-
 }
