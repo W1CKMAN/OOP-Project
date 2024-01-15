@@ -1,100 +1,99 @@
 package Views;
 
 import javax.swing.*;
+
+import Models.CustomerOrder;
+import DatabaseConnection.DatabaseLayer;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
+import java.util.Date;
 
-import Models.CustomerOrder;
-import Controllers.OrderManagementController;
-public class OrderManagementView extends JFrame {
+public class OrderManagementView extends JDialog {
     private JTextField orderIdField;
-    private JTextField customerNameField;
+    private JTextField customerIdField;
     private JTextField vehicleModelField;
-    private JTextField statusField;
     private JButton updateButton;
     private JButton removeButton;
     private JButton addButton;
+    private JButton searchButton;
+    private JComboBox statusComboBox;
+    private JPanel ManagementPanel;
 
 
-    public OrderManagementView() {
+    public OrderManagementView(JFrame parentFrame) {
+
         setTitle("Order Management");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        initComponents();
-        addComponents();
+        setContentPane(ManagementPanel);
+        setModal(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         addListeners();
-    }
-
-    private void initComponents() {
-        orderIdField = new JTextField(10);
-        customerNameField = new JTextField(20);
-        vehicleModelField = new JTextField(15);
-        statusField = new JTextField(10);
-        addButton = new JButton("Add");
-        updateButton = new JButton("Update");
-        removeButton = new JButton("Remove");
-    }
-
-    private void addComponents() {
-        JPanel mainPanel = new JPanel(new GridLayout(5, 2, 10, 10));
-
-        mainPanel.add(new JLabel("Order ID:"));
-        mainPanel.add(orderIdField);
-
-        mainPanel.add(new JLabel("Customer Name:"));
-        mainPanel.add(customerNameField);
-
-        mainPanel.add(new JLabel("Vehicle Model:"));
-        mainPanel.add(vehicleModelField);
-
-        mainPanel.add(new JLabel("Status:"));
-        mainPanel.add(statusField);
-
-        mainPanel.add(addButton);
-        mainPanel.add(updateButton);
-        mainPanel.add(removeButton);
-
-        setLayout(new BorderLayout());
-        add(mainPanel, BorderLayout.CENTER);
+        setVisible(true);
     }
 
     private void addListeners() {
-        addButton.addActionListener(e -> {
-            // Handle add button click
-            String customerName = customerNameField.getText();
-            String vehicleModel = vehicleModelField.getText();
-            String status = statusField.getText();
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int customerId = Integer.parseInt(customerIdField.getText());
+                String vehicleModel = vehicleModelField.getText();
+                String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();  // Get the selected status
 
-            CustomerOrder newOrder = new CustomerOrder(0, customerName, vehicleModel, status);
-            OrderManagementController.addOrder(newOrder);
+                // Get the current date
+                Date orderDate = new Date();
+
+                // Pass a placeholder value for orderId
+                CustomerOrder newOrder = new CustomerOrder(0, customerId, orderDate, vehicleModel, status);
+                DatabaseLayer.saveOrder(newOrder);
+            }
         });
 
-        updateButton.addActionListener(e -> {
-            // Handle update button click
-            int orderId = Integer.parseInt(orderIdField.getText());
-            String customerName = customerNameField.getText();
-            String vehicleModel = vehicleModelField.getText();
-            String status = statusField.getText();
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int orderId = Integer.parseInt(orderIdField.getText());
+                int customerId = Integer.parseInt(customerIdField.getText());
+                String vehicleModel = vehicleModelField.getText();
+                String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();  // Get the selected status
 
-            CustomerOrder updatedOrder = new CustomerOrder(orderId, customerName, vehicleModel, status);
-            OrderManagementController.updateOrder(updatedOrder);
+                // Get the current date
+                Date orderDate = new Date();
+
+                CustomerOrder updatedOrder = new CustomerOrder(orderId, customerId, orderDate, vehicleModel, status);
+                DatabaseLayer.updateOrder(updatedOrder);
+            }
         });
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int orderId = Integer.parseInt(orderIdField.getText());
+                DatabaseLayer.deleteOrder(orderId);
+            }
+        });
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int orderId = Integer.parseInt(orderIdField.getText());
+                CustomerOrder searchedOrder = DatabaseLayer.getOrderById(orderId);
+                if (searchedOrder != null) {
+                    customerIdField.setText(Integer.toString(searchedOrder.getCustomerId()));
+                    vehicleModelField.setText(searchedOrder.getVehicleModel());
 
-        removeButton.addActionListener(e -> {
-            // Handle remove button click
-            int orderId = Integer.parseInt(orderIdField.getText());
-            OrderManagementController.removeOrder(orderId);
+                    // Select the appropriate status in the statusComboBox
+                    statusComboBox.setSelectedItem(searchedOrder.getStatus());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Order not found");
+                }
+            }
         });
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new OrderManagementView().setVisible(true);
-            }
-        });
+        new OrderManagementView(new JFrame());
     }
+    
+
 }

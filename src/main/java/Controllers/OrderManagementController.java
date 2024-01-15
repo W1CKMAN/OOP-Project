@@ -6,7 +6,7 @@ import DatabaseConnection.DatabaseLayer;
 import java.util.List;
 
 public class OrderManagementController {
-    private DatabaseLayer databaseLayer;
+    private static DatabaseLayer databaseLayer;
 
     public OrderManagementController(DatabaseLayer databaseLayer) {
         this.databaseLayer = databaseLayer;

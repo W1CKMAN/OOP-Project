@@ -13,12 +13,14 @@ public class CustomerOrder {
     public CustomerOrder() {
     }
 
-    public CustomerOrder(int customerId, Date orderDate, String vehicleModel, String status) {
+    public CustomerOrder(int orderId, int customerId, Date orderDate, String vehicleModel, String status) {
+        this.orderId = orderId;
         this.customerId = customerId;
         this.orderDate = orderDate;
         this.vehicleModel = vehicleModel;
         this.status = status;
     }
+
 
     public int getOrderId() {
         return orderId;
