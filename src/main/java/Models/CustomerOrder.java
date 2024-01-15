@@ -8,17 +8,22 @@ public class CustomerOrder {
     private int customerId;
     private Date orderDate;
     private String vehicleModel;
+    private String vehicleNumber;
     private String status;
+
 
     public CustomerOrder() {
     }
 
-    public CustomerOrder(int customerId, Date orderDate, String vehicleModel, String status) {
+    public CustomerOrder(int orderId, int customerId, Date orderDate, String vehicleModel ,String vehicleNumber, String status) {
+        this.orderId = orderId;
         this.customerId = customerId;
         this.orderDate = orderDate;
         this.vehicleModel = vehicleModel;
         this.status = status;
+        this.vehicleNumber = vehicleNumber;
     }
+
 
     public int getOrderId() {
         return orderId;
@@ -58,5 +63,12 @@ public class CustomerOrder {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
+    public String getVehicleNumber() {
+        return vehicleNumber;
     }
 }
