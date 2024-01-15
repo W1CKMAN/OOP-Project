@@ -83,23 +83,32 @@ public class OrderManagementView extends JDialog {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Clear the text fields
+                customerIdField.setText("");
+                vehicleModelField.setText("");
+                vehicleNumberField.setText("");
+
                 int orderId = Integer.parseInt(orderIdField.getText());
                 CustomerOrder searchedOrder = DatabaseLayer.getOrderById(orderId);
                 if (searchedOrder != null) {
                     customerIdField.setText(Integer.toString(searchedOrder.getCustomerId()));
                     vehicleModelField.setText(searchedOrder.getVehicleModel());
-
-                    // Select the appropriate status in the statusComboBox
+                    vehicleNumberField.setText(searchedOrder.getVehicleNumber());  // Set the vehicle number
                     statusComboBox.setSelectedItem(searchedOrder.getStatus());
                 } else {
                     JOptionPane.showMessageDialog(null, "Order not found");
                 }
             }
         });
+
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                // Clear the text fields
+                customerIdField.setText("");
+                vehicleModelField.setText("");
+                vehicleNumberField.setText("");
+                statusComboBox.setSelectedIndex(0);  // Reset the statusComboBox
             }
         });
     }
