@@ -75,7 +75,7 @@ public class DatabaseLayer {
         }
     }
 
-    public List<Order> getAllOrders() {
+    public static List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM Orders";
 
@@ -173,5 +173,19 @@ public class DatabaseLayer {
         }
 
         return user;
+    }
+    public static String getCustomerEmail(int customerId) {
+        String email = null;
+        try (Connection conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+            PreparedStatement statement = conn.prepareStatement("SELECT email FROM Customers WHERE customer_id = ?");
+            statement.setInt(1, customerId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                email = resultSet.getString("email");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return email;
     }
 }
