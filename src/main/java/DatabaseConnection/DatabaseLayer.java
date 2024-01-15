@@ -11,8 +11,9 @@ public class DatabaseLayer {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
-    public static void saveOrder(CustomerOrder order) {
+    public static int saveOrder(CustomerOrder order) {
         String sql = "INSERT INTO Orders (customer_id, order_date, vehicle_model, status) VALUES (?, ?, ?, ?)";
+        int orderId = 0;
 
         try (
                 Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
@@ -28,13 +29,15 @@ public class DatabaseLayer {
             if (affectedRows > 0) {
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    int orderId = generatedKeys.getInt(1);
+                    orderId = generatedKeys.getInt(1);
                     order.setOrderId(orderId);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return orderId;
     }
 
     public static void updateOrder(CustomerOrder order) {
@@ -85,6 +88,7 @@ public class DatabaseLayer {
                 order.setCustomerId(resultSet.getInt("customer_id"));
                 order.setOrderDate(resultSet.getDate("order_date"));
                 order.setVehicleModel(resultSet.getString("vehicle_model"));
+                order.setVehicleNumber(resultSet.getString("vehicle_number"));
                 order.setStatus(resultSet.getString("status"));
 
                 orders.add(order);
@@ -113,6 +117,7 @@ public class DatabaseLayer {
                 order.setCustomerId(resultSet.getInt("customer_id"));
                 order.setOrderDate(resultSet.getDate("order_date"));
                 order.setVehicleModel(resultSet.getString("vehicle_model"));
+                order.setVehicleNumber(resultSet.getString("vehicle_number"));
                 order.setStatus(resultSet.getString("status"));
             }
         } catch (SQLException e) {
@@ -120,5 +125,25 @@ public class DatabaseLayer {
         }
 
         return order;
+    }
+    public static boolean customerIdExists(int customerId) {
+        String sql = "SELECT COUNT(*) FROM Customers WHERE customer_id = ?";
+        boolean exists = false;
+
+        try (
+                Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            preparedStatement.setInt(1, customerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                exists = resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return exists;
     }
 }

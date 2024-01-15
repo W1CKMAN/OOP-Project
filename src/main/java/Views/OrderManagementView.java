@@ -5,7 +5,6 @@ import javax.swing.*;
 import Models.CustomerOrder;
 import DatabaseConnection.DatabaseLayer;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
@@ -21,17 +20,24 @@ public class OrderManagementView extends JDialog {
     private JButton searchButton;
     private JComboBox statusComboBox;
     private JPanel ManagementPanel;
+    private JTextField textField1;
+    private JButton clearButton;
 
 
     public OrderManagementView(JFrame parentFrame) {
 
         setTitle("Order Management");
-        setSize(400, 300);
+        setSize(500, 400);
         setContentPane(ManagementPanel);
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // Add statuses to statusComboBox
+        statusComboBox.addItem("Pending");
+        statusComboBox.addItem("In Progress");
+        statusComboBox.addItem("Completed");
         addListeners();
         setVisible(true);
+
     }
 
     private void addListeners() {
@@ -39,15 +45,17 @@ public class OrderManagementView extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int customerId = Integer.parseInt(customerIdField.getText());
+                if (!DatabaseLayer.customerIdExists(customerId)) {
+                    JOptionPane.showMessageDialog(null, "Customer id doesn't exist");
+                    return;
+                }
+
                 String vehicleModel = vehicleModelField.getText();
-                String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();  // Get the selected status
-
-                // Get the current date
+                String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();
                 Date orderDate = new Date();
-
-                // Pass a placeholder value for orderId
                 CustomerOrder newOrder = new CustomerOrder(0, customerId, orderDate, vehicleModel, status);
-                DatabaseLayer.saveOrder(newOrder);
+                int newOrderId = DatabaseLayer.saveOrder(newOrder);
+                JOptionPane.showMessageDialog(null, "New order id: " + newOrderId);
             }
         });
 
@@ -87,6 +95,12 @@ public class OrderManagementView extends JDialog {
                 } else {
                     JOptionPane.showMessageDialog(null, "Order not found");
                 }
+            }
+        });
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
