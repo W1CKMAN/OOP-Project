@@ -2,7 +2,7 @@ package Views;
 
 import javax.swing.*;
 
-import Models.CustomerOrder;
+import Models.Order;
 import DatabaseConnection.DatabaseLayer;
 
 import java.awt.event.ActionEvent;
@@ -23,10 +23,9 @@ public class OrderManagementView extends JDialog {
     private JTextField vehicleNumberField;
     private JButton clearButton;
 
-
-    public OrderManagementView(JFrame parentFrame) {
-
-        setTitle("Order Management");
+    
+    public OrderManagementView() {
+        setTitle("Order Manager");
         setSize(500, 400);
         setContentPane(ManagementPanel);
         setModal(true);
@@ -36,10 +35,8 @@ public class OrderManagementView extends JDialog {
         statusComboBox.addItem("In Progress");
         statusComboBox.addItem("Completed");
         addListeners();
-        setVisible(true);
-
     }
-
+    
     private void addListeners() {
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -54,7 +51,7 @@ public class OrderManagementView extends JDialog {
                 String vehicleNumber = vehicleNumberField.getText(); 
                 String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();
                 Date orderDate = new Date();
-                CustomerOrder newOrder = new CustomerOrder(0, customerId, orderDate, vehicleModel, vehicleNumber, status);  
+                Order newOrder = new Order(0, customerId, orderDate, vehicleModel, vehicleNumber, status);
                 int newOrderId = DatabaseLayer.saveOrder(newOrder);
                 JOptionPane.showMessageDialog(null, "New order id: " + newOrderId);
             }
@@ -69,7 +66,7 @@ public class OrderManagementView extends JDialog {
                 String vehicleNumber = vehicleNumberField.getText(); 
                 String status = Objects.requireNonNull(statusComboBox.getSelectedItem()).toString();
                 Date orderDate = new Date();
-                CustomerOrder updatedOrder = new CustomerOrder(orderId, customerId, orderDate, vehicleModel, vehicleNumber, status);
+                Order updatedOrder = new Order(orderId, customerId, orderDate, vehicleModel, vehicleNumber, status);
                 DatabaseLayer.updateOrder(updatedOrder);
             }
         });
@@ -89,7 +86,7 @@ public class OrderManagementView extends JDialog {
                 vehicleNumberField.setText("");
 
                 int orderId = Integer.parseInt(orderIdField.getText());
-                CustomerOrder searchedOrder = DatabaseLayer.getOrderById(orderId);
+                Order searchedOrder = DatabaseLayer.getOrderById(orderId);
                 if (searchedOrder != null) {
                     customerIdField.setText(Integer.toString(searchedOrder.getCustomerId()));
                     vehicleModelField.setText(searchedOrder.getVehicleModel());
@@ -105,15 +102,16 @@ public class OrderManagementView extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Clear the text fields
-                customerIdField.setText("");
+                customerIdField.setText(""); 
                 vehicleModelField.setText("");
                 vehicleNumberField.setText("");
-                statusComboBox.setSelectedIndex(0);  // Reset the statusComboBox
+                statusComboBox.setSelectedIndex(0); 
             }
         });
     }
 
     public static void main(String[] args) {
-        new OrderManagementView(new JFrame());
+        OrderManagementView view = new OrderManagementView();
+        view.setVisible(true);  // Call setVisible directly on the OrderManagementView instance
     }
 }

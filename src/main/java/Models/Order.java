@@ -3,7 +3,7 @@ package Models;
 
 import java.util.Date;
 
-public class CustomerOrder {
+public class Order {
     private int orderId;
     private int customerId;
     private Date orderDate;
@@ -12,10 +12,10 @@ public class CustomerOrder {
     private String status;
 
 
-    public CustomerOrder() {
+    public Order() {
     }
 
-    public CustomerOrder(int orderId, int customerId, Date orderDate, String vehicleModel ,String vehicleNumber, String status) {
+    public Order(int orderId, int customerId, Date orderDate, String vehicleModel , String vehicleNumber, String status) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.orderDate = orderDate;
