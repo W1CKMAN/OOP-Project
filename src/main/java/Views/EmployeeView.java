@@ -1,5 +1,4 @@
 import net.proteanit.sql.DbUtils;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
