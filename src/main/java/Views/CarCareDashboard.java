@@ -1,6 +1,7 @@
 package Views;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class CarCareDashboard extends JFrame {
@@ -13,8 +14,9 @@ public class CarCareDashboard extends JFrame {
     private JPanel DashPanel;
 
     public CarCareDashboard() {
+        getComponents();
         setTitle("Car Care Dashboard");
-        setMinimumSize(new java.awt.Dimension(500, 500));
+        setMinimumSize(new Dimension(500, 500));
         setContentPane(DashPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();

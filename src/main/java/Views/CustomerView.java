@@ -10,8 +10,10 @@ public class CustomerView extends JDialog {
     private JTextField tAddress;
     private JButton registerButton;
     private JPanel registerPanel;
+    private JTextField searchByIDTextField;
+    private JButton searchButton;
 
-    public CustomerView(JFrame parent) {
+    public CustomerView() {
         setTitle("Add a customer");
         setMinimumSize(new Dimension(450, 474));
         setContentPane(registerPanel);
@@ -39,7 +41,7 @@ public class CustomerView extends JDialog {
         return this.registerButton;
     }
     public static void main(String[] args) {
-        CustomerView view = new CustomerView(null);
+        CustomerView view = new CustomerView();
         view.setVisible(true);
     }
 }

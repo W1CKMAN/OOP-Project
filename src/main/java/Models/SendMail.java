@@ -9,7 +9,7 @@ import java.util.Properties;
 public class SendMail {
     public static void send(String to, String subject, String text) {
         final String username = "helithalochana@gmail.com";
-        final String password = "lpqjvykiourhftpr";
+        final String password = "lpqj vyki ourh ftpr";
 
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true");

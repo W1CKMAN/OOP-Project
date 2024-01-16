@@ -28,7 +28,7 @@ public class CarCareDashboardController {
          this.dashboard.addcustomerDetailsManagerButtonListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
-                 new CustomerView(null).setVisible(true);
+                 new CustomerView().setVisible(true);
              }
          });
 

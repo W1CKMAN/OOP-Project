@@ -33,6 +33,7 @@ public class OrderManagementView extends JDialog {
     private JButton reloadButton;
 
     public OrderManagementView() {
+        getComponents();
         setTitle("Order Manager");
         setSize(900, 400);
         setContentPane(ManagementPanel);
