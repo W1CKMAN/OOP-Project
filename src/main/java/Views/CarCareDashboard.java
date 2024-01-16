@@ -16,7 +16,8 @@ public class CarCareDashboard extends JFrame {
     public CarCareDashboard() {
         getComponents();
         setTitle("Car Care Dashboard");
-        setMinimumSize(new Dimension(500, 500));
+        setSize(900, 500);
+        setMinimumSize(new Dimension(900, 500));
         setContentPane(DashPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();

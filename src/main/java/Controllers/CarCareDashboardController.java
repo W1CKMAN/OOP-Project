@@ -18,12 +18,12 @@ public class CarCareDashboardController {
             }
         });
 
-//         this.dashboard.addJobsManagerButtonListener(new ActionListener() {
-//             @Override
-//             public void actionPerformed(ActionEvent e) {
-//                 new JobsManagerView().setVisible(true);
-//             }
-//         });
+         this.dashboard.addJobsManagerButtonListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 new JobsView().setVisible(true);
+             }
+         });
 
          this.dashboard.addcustomerDetailsManagerButtonListener(new ActionListener() {
              @Override
@@ -46,11 +46,11 @@ public class CarCareDashboardController {
 //             }
 //         });
 //
-//         this.dashboard.addEmployeeManagerButtonListener(new ActionListener() {
-//             @Override
-//             public void actionPerformed(ActionEvent e) {
-//                 new EmployeeManagerView().setVisible(true);
-//             }
-//         });
+         this.dashboard.addEmployeeManagerButtonListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 new EmployeeView().setVisible(true);
+             }
+         });
     }
 }

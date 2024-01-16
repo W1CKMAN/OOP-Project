@@ -1,55 +1,59 @@
 package Models;
 
 public class Employee {
-    private static int nextempid = 1;
-    private int empid;
-    private String empName;
-    private String mobile;
-    private String salary;
+    private int employeeId;
+    private String employeeName;
+    private String contactNumber;
+    private String email;
+    private String position;
 
     public Employee() {
     }
 
-    public Employee(String empName, String mobile, String salary) {
-        this.empid = nextempid++;
-        this.empName = empName;
-        this.mobile = mobile;
-        this.salary = salary;
+    public Employee(String employeeName, String contactNumber, String email, String position) {
+        this.employeeName = employeeName;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.position = position;
     }
 
-    public int getempid() {
-        return empid;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setempid(int empid) {
-        this.empid = empid;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public String getempName() {
-        return empName;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void setempName(String empName) {
-        this.empName = empName;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
-    public String getmobile() {
-        return mobile;
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public void setmobile(String mobile) {
-        this.mobile = mobile;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
-    public String getsalary() {
-        return salary;
+    public String getEmail() {
+        return email;
     }
 
-    public void setsalary(String salary) {
-        this.salary = salary;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public static int getNextempid() {
-        return nextempid;
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

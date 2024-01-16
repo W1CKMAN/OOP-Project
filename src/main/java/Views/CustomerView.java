@@ -12,10 +12,15 @@ public class CustomerView extends JDialog {
     private JPanel registerPanel;
     private JTextField searchByIDTextField;
     private JButton searchButton;
+    private JButton updateButton;
+    private JButton removeButton;
+    private JButton clearButton;
+    private JTable table1;
+    private JScrollPane CustomerTable;
 
     public CustomerView() {
         setTitle("Add a customer");
-        setMinimumSize(new Dimension(450, 474));
+        setMinimumSize(new Dimension(900, 500));
         setContentPane(registerPanel);
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

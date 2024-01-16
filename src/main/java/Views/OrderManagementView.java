@@ -35,7 +35,7 @@ public class OrderManagementView extends JDialog {
     public OrderManagementView() {
         getComponents();
         setTitle("Order Manager");
-        setSize(900, 400);
+        setSize(900, 500);
         setContentPane(ManagementPanel);
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
