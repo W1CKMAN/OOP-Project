@@ -1,6 +1,6 @@
 package Controllers;
 
-import Models.CustomerOrder;
+import Models.Order;
 import DatabaseConnection.DatabaseLayer;
 
 import java.util.List;
@@ -12,12 +12,12 @@ public class OrderManagementController {
         this.databaseLayer = databaseLayer;
     }
 
-    public static void addOrder(CustomerOrder order) {
+    public static void addOrder(Order order) {
         // Validation logic if needed
         databaseLayer.saveOrder(order);
     }
 
-    public static void updateOrder(CustomerOrder order) {
+    public static void updateOrder(Order order) {
         // Validation logic if needed
         databaseLayer.updateOrder(order);
     }
@@ -26,7 +26,7 @@ public class OrderManagementController {
         databaseLayer.deleteOrder(orderId);
     }
 
-    public List<CustomerOrder> getAllOrders() {
+    public List<Order> getAllOrders() {
         return databaseLayer.getAllOrders();
     }
 }

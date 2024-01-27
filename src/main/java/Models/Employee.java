@@ -2,16 +2,18 @@ package Models;
 
 public class Employee {
     private int employeeId;
-    private String firstName;
-    private String lastName;
+    private String employeeName;
+    private String contactNumber;
+    private String email;
     private String position;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String position) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Employee(String employeeName, String contactNumber, String email, String position) {
+        this.employeeName = employeeName;
+        this.contactNumber = contactNumber;
+        this.email = email;
         this.position = position;
     }
 
@@ -23,20 +25,28 @@ public class Employee {
         this.employeeId = employeeId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPosition() {

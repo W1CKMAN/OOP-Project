@@ -4,14 +4,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import Models.CustomerOrder;
-
+import Models.Order;
+import Models.User;
 public class DatabaseLayer {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/oop-chaos";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
-    public static int saveOrder(CustomerOrder order) {
+    public static int saveOrder(Order order) {
         String sql = "INSERT INTO Orders (customer_id, order_date, vehicle_model, vehicle_number, status) VALUES (?, ?, ?, ?, ?)";
         int orderId = 0;
 
@@ -41,7 +41,7 @@ public class DatabaseLayer {
         return orderId;
     }
 
-    public static void updateOrder(CustomerOrder order) {
+    public static void updateOrder(Order order) {
         String sql = "UPDATE Orders SET customer_id=?, vehicle_model=?, vehicle_number=?, status=? WHERE order_id=?";
 
         try (
@@ -75,8 +75,8 @@ public class DatabaseLayer {
         }
     }
 
-    public List<CustomerOrder> getAllOrders() {
-        List<CustomerOrder> orders = new ArrayList<>();
+    public static List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM Orders";
 
         try (
@@ -85,7 +85,7 @@ public class DatabaseLayer {
                 ResultSet resultSet = statement.executeQuery(sql)
         ) {
             while (resultSet.next()) {
-                CustomerOrder order = new CustomerOrder();
+                Order order = new Order();
                 order.setOrderId(resultSet.getInt("order_id"));
                 order.setCustomerId(resultSet.getInt("customer_id"));
                 order.setOrderDate(resultSet.getDate("order_date"));
@@ -102,8 +102,8 @@ public class DatabaseLayer {
         return orders;
     }
 
-    public static CustomerOrder getOrderById(int orderId) {
-        CustomerOrder order = null;
+    public static Order getOrderById(int orderId) {
+        Order order = null;
         String sql = "SELECT * FROM Orders WHERE order_id = ?";
 
         try (
@@ -114,7 +114,7 @@ public class DatabaseLayer {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                order = new CustomerOrder();
+                order = new Order();
                 order.setOrderId(resultSet.getInt("order_id"));
                 order.setCustomerId(resultSet.getInt("customer_id"));
                 order.setOrderDate(resultSet.getDate("order_date"));
@@ -147,5 +147,45 @@ public class DatabaseLayer {
         }
 
         return exists;
+    }
+    
+    public static User addUserToDatabase(String name, String email, String phone, String address) {
+        User user = null;
+
+        try (Connection conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+            String sql = "INSERT INTO customers (customer_name, email, contact_number, address) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, phone);
+            preparedStatement.setString(4, address);
+
+            int addRows = preparedStatement.executeUpdate();
+            if(addRows > 0) {
+                user = new User();
+                user.setName(name);
+                user.setEmail(email);
+                user.setPhone(phone);
+                user.setAddress(address);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+    public static String getCustomerEmail(int customerId) {
+        String email = null;
+        try (Connection conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+            PreparedStatement statement = conn.prepareStatement("SELECT email FROM Customers WHERE customer_id = ?");
+            statement.setInt(1, customerId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                email = resultSet.getString("email");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return email;
     }
 }

@@ -1,188 +1,128 @@
-import net.proteanit.sql.DbUtils;
+package Views;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
+import java.util.List;
 
-public class EmployeeView {
-    private JPanel Main;
+import DatabaseConnection.EmployeeDatabase;
+import Models.Employee;
+
+
+public class EmployeeView extends JDialog{
+    private JTextField EmpIdField;
+    private JButton searchButton;
+    private JTextField EmpNameField;
+    private JTextField EmpPhoneField;
+    private JTextField EmpEmailField;
+    private JTextField EmpPostField;
+    private JButton addButton;
+    private JButton updateButton;
+    private JButton removeButton;
+    private JButton clearButton;
     private JTable table1;
-    private JTextField txtName;
-    private JTextField txtSalary;
-    private JTextField txtMobile;
-    private JButton save;
-    private JButton update;
-    private JButton Delete;
-    private JButton search;
-    private JTextField txtid;
-    private JLabel empName;
-    private JLabel Salary;
-    private JLabel Mobile;
-
-    public static void main(String[] args) {
-        JFrame frame= new JFrame("Employee");
-        frame.setContentPane(new EmployeeView().Main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    Connection con;
-    PreparedStatement pst;
-
-    public void connect(){
-        try{
-            Class.forName("con.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/CarCare", "root","");
-            System.out.println("Success");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
-    void tableLoad()
-    {
-        try {
-            pst = con.prepareStatement("select * from employee");
-            ResultSet rs= pst.executeQuery();
-            table1.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private JPanel EmployeePane;
+    private JScrollPane EmpTable;
 
     public EmployeeView() {
-        connect();
-        tableLoad();
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        getComponents();
+        setTitle("Employee Manager");
+        setSize(900, 500);
+        setContentPane(EmployeePane);
+        setModal(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addListeners();
+        table1.setModel(getAllEmployeesTableModel());
+    }
+    private DefaultTableModel getAllEmployeesTableModel() {
+        String[] columnNames = {"Employee ID", "Employee Name", "Contact Number", "Email", "Position"};
+        List<Employee> employees = EmployeeDatabase.getAllEmployees();
+        Object[][] data = new Object[employees.size()][columnNames.length];
+        for (int i = 0; i < employees.size(); i++) {
+            Employee employee = employees.get(i);
+            data[i][0] = employee.getEmployeeId();
+            data[i][1] = employee.getEmployeeName();
+            data[i][2] = employee.getContactNumber();
+            data[i][3] = employee.getEmail();
+            data[i][4] = employee.getPosition();
+        }
+        return new DefaultTableModel(data, columnNames);
+    }
 
-                String empName,salary,mobile;
-
-                empName = txtName.getText();
-                salary = txtSalary.getText();
-                mobile = txtMobile.getText();
-
-                try{
-                    pst = con.prepareStatement("insert into employee(empName,salary,mobile) values(?,?,?)");
-                    pst.setString(1,empName);
-                    pst.setString(2,salary);
-                    pst.setString(3,mobile);
-                    pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Added!");
-                    txtName.setText("");
-                    txtSalary.setText("");
-                    txtMobile.setText("");
-                    txtName.requestFocus();
+    private void addListeners() {
+        addButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Employee employee = new Employee();
+                    employee.setEmployeeName(EmpNameField.getText());
+                    employee.setContactNumber(EmpPhoneField.getText());
+                    employee.setEmail(EmpEmailField.getText());
+                    employee.setPosition(EmpPostField.getText());
+                    EmployeeDatabase.saveEmployee(employee);
+                    refreshTable();
                 }
-                catch (SQLException e1){
-                    e1.printStackTrace();
-                }
-
-            }
-
-        });
-        search.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-
-                    String empid = txtid.getText();
-
-                    pst = con.prepareStatement("select empName,salary,mobile from employee where id = ?");
-                    pst.setString(1, empid);
-                    ResultSet rs = pst.executeQuery();
-
-                    if(rs.next()==true)
-                    {
-                        String empName = rs.getString(1);
-                        String salary = rs.getString(2);
-                        String mobile = rs.getString(3);
-
-                        txtName.setText(empName);
-                        txtSalary.setText(salary);
-                        txtMobile.setText(mobile);
-
-                    }
-                    else
-                    {
-                        txtName.setText("");
-                        txtSalary.setText("");
-                        txtMobile.setText("");
-                        JOptionPane.showMessageDialog(null,"Invalid Employee No");
-
+            });
+        updateButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int selectedRow = table1.getSelectedRow();
+                    if (selectedRow >= 0) {
+                        Employee employee = new Employee();
+                        employee.setEmployeeId((Integer) table1.getValueAt(selectedRow, 0));
+                        employee.setEmployeeName(EmpNameField.getText());
+                        employee.setContactNumber(EmpPhoneField.getText());
+                        employee.setEmail(EmpEmailField.getText());
+                        employee.setPosition(EmpPostField.getText());
+                        EmployeeDatabase.updateEmployee(employee);
+                        refreshTable();
                     }
                 }
-                catch (SQLException ex)
-                {
-                    ex.printStackTrace();
+            });
+        removeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int selectedRow = table1.getSelectedRow();
+                    if (selectedRow >= 0) {
+                        int employeeId = (Integer) table1.getValueAt(selectedRow, 0);
+                        EmployeeDatabase.deleteEmployee(employeeId);
+                        refreshTable();
+                    }
                 }
-            }
-        });
-        update.addActionListener(new ActionListener() {
+            });
+        clearButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    EmpIdField.setText("");
+                    EmpNameField.setText("");
+                    EmpPhoneField.setText("");
+                    EmpEmailField.setText("");
+                    EmpPostField.setText("");
+                }
+            });
+        searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String empid,empName,salary,mobile;
-                empName = txtName.getText();
-                salary = txtSalary.getText();
-                mobile = txtMobile.getText();
-                empid = txtid.getText();
-
-                try {
-                    pst = con.prepareStatement("update employee set empname = ?,salary = ?,mobile = ? where id = ?");
-                    pst.setString(1, empName);
-                    pst.setString(2, salary);
-                    pst.setString(3, mobile);
-                    pst.setString(4, empid);
-
-                    pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Record Updated!");
-                    tableLoad();
-                    txtName.setText("");
-                    txtSalary.setText("");
-                    txtMobile.setText("");
-                    txtName.requestFocus();
-                }
-
-                catch (SQLException e1)
-                {
-                    e1.printStackTrace();
+                int employeeId = Integer.parseInt(EmpIdField.getText());
+                Employee employee = EmployeeDatabase.getEmployeeById(employeeId);
+                if (employee != null) {
+                    EmpNameField.setText(employee.getEmployeeName());
+                    EmpPhoneField.setText(employee.getContactNumber());
+                    EmpEmailField.setText(employee.getEmail());
+                    EmpPostField.setText(employee.getPosition());
                 }
             }
         });
-        Delete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String empid;
-                empid = txtid.getText();
+    }
 
-                try {
-                    pst = con.prepareStatement("delete from employee  where id = ?");
+        private void refreshTable() {
+            DefaultTableModel model = getAllEmployeesTableModel();
+            table1.setModel(model);
+            model.fireTableDataChanged();
+        }
 
-                    pst.setString(1, empid);
-
-                    pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Record Deleted!");
-                    tableLoad();
-                    txtName.setText("");
-                    txtSalary.setText("");
-                    txtMobile.setText("");
-                    txtName.requestFocus();
-                }
-
-                catch (SQLException e1)
-                {
-
-                    e1.printStackTrace();
-                }
-            }
-        });
+    public static void main(String[] args) {
+        EmployeeView employeeView = new EmployeeView();
+        employeeView.setVisible(true);
     }
 }

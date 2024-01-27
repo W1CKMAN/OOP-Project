@@ -1,16 +1,18 @@
 package Models;
 
 public class Inventory {
+    private static int nextproductId = 1;
     private int productId;
-    private String productName;
+    private String name;
     private int quantity;
     private double price;
 
     public Inventory() {
     }
 
-    public Inventory(String productName, int quantity, double price) {
-        this.productName = productName;
+    public Inventory(String name, int quantity, double price) {
+        this.productId = nextproductId++;
+        this.name = name;
         this.quantity = quantity;
         this.price = price;
     }
@@ -23,12 +25,12 @@ public class Inventory {
         this.productId = productId;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getname() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setname(String name) {
+        this.name = name;
     }
 
     public int getQuantity() {
@@ -45,5 +47,9 @@ public class Inventory {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public static int getnextproductId() {
+        return nextproductId;
     }
 }
