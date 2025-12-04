@@ -297,9 +297,26 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**W1CKMAN**
+**Helitha Guruge** ([@iamhelitha](https://github.com/iamhelitha))
 
-- GitHub: [@W1CKMAN](https://github.com/W1CKMAN)
+### 🤝 Contributors
+
+Thanks to all the amazing people who contributed to this project:
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/iamhelitha"><img src="https://github.com/iamhelitha.png" width="80px;" alt=""/><br /><sub><b>Helitha Guruge</b></sub></a><br />💻 Lead Developer</td>
+    <td align="center"><a href="https://github.com/SA23098350"><img src="https://github.com/SA23098350.png" width="80px;" alt=""/><br /><sub><b>SA23098350</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/Ravidesilva89"><img src="https://github.com/Ravidesilva89.png" width="80px;" alt=""/><br /><sub><b>Ravidesilva89</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/NipunCreations"><img src="https://github.com/NipunCreations.png" width="80px;" alt=""/><br /><sub><b>Nipun Fernando</b></sub></a><br />💻</td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/W1CKMAN"><img src="https://github.com/W1CKMAN.png" width="80px;" alt=""/><br /><sub><b>W1CKMAN</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/Nihidunimthaka"><img src="https://github.com/Nihidunimthaka.png" width="80px;" alt=""/><br /><sub><b>Nihidunimthaka</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/dulan8"><img src="https://github.com/dulan8.png" width="80px;" alt=""/><br /><sub><b>dulan8</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/senuja2003"><img src="https://github.com/senuja2003.png" width="80px;" alt=""/><br /><sub><b>senuja2003</b></sub></a><br />💻</td>
+  </tr>
+</table>
 
 ---
 
