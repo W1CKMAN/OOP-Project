@@ -3,6 +3,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### JAR files (use Maven dependencies instead) ###
+*.jar
+!.mvn/wrapper/*.jar
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

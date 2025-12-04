@@ -1,6 +1,6 @@
 package Controllers;
 
-import Models.User;
+import Models.Customer;
 import Views.CustomerView;
 import DatabaseConnection.DatabaseLayer;
 
@@ -8,13 +8,16 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @deprecated Use CustomerDAO and modern CustomerView instead
+ */
+@Deprecated
 public class RegistrationController {
     private CustomerView form;
-    private DatabaseLayer dbLayer;
 
+    @Deprecated
     public RegistrationController(CustomerView form, DatabaseLayer dbLayer) {
         this.form = form;
-        this.dbLayer = dbLayer;
 
         this.form.getRegisterButton().addActionListener(new ActionListener() {
             @Override
@@ -35,9 +38,9 @@ public class RegistrationController {
             return;
         }
 
-        User user = DatabaseLayer.addUserToDatabase(name, email, phone, address);
-        if (user != null) {
-            JOptionPane.showMessageDialog(form, "User registered successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        Customer customer = DatabaseLayer.addUserToDatabase(name, email, phone, address);
+        if (customer != null) {
+            JOptionPane.showMessageDialog(form, "Customer registered successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(form, "Registration failed", "Error", JOptionPane.ERROR_MESSAGE);
         }

@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.Order;
-import Models.User;
+
+/**
+ * @deprecated Use DAO implementations instead (OrderDAOImpl, etc.)
+ */
+@Deprecated
 public class DatabaseLayer {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/oop-chaos";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
+    @Deprecated
     public static int saveOrder(Order order) {
         String sql = "INSERT INTO Orders (customer_id, order_date, vehicle_model, vehicle_number, status) VALUES (?, ?, ?, ?, ?)";
         int orderId = 0;
@@ -41,6 +46,7 @@ public class DatabaseLayer {
         return orderId;
     }
 
+    @Deprecated
     public static void updateOrder(Order order) {
         String sql = "UPDATE Orders SET customer_id=?, vehicle_model=?, vehicle_number=?, status=? WHERE order_id=?";
 
@@ -60,6 +66,7 @@ public class DatabaseLayer {
         }
     }
 
+    @Deprecated
     public static void deleteOrder(int orderId) {
         String sql = "DELETE FROM Orders WHERE order_id=?";
 
@@ -75,6 +82,7 @@ public class DatabaseLayer {
         }
     }
 
+    @Deprecated
     public static List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM Orders";
@@ -102,6 +110,7 @@ public class DatabaseLayer {
         return orders;
     }
 
+    @Deprecated
     public static Order getOrderById(int orderId) {
         Order order = null;
         String sql = "SELECT * FROM Orders WHERE order_id = ?";
@@ -128,6 +137,8 @@ public class DatabaseLayer {
 
         return order;
     }
+
+    @Deprecated
     public static boolean customerIdExists(int customerId) {
         String sql = "SELECT COUNT(*) FROM Customers WHERE customer_id = ?";
         boolean exists = false;
@@ -149,8 +160,12 @@ public class DatabaseLayer {
         return exists;
     }
     
-    public static User addUserToDatabase(String name, String email, String phone, String address) {
-        User user = null;
+    /**
+     * @deprecated Use CustomerDAO instead
+     */
+    @Deprecated
+    public static Models.Customer addUserToDatabase(String name, String email, String phone, String address) {
+        Models.Customer customer = null;
 
         try (Connection conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
             String sql = "INSERT INTO customers (customer_name, email, contact_number, address) VALUES (?, ?, ?, ?)";
@@ -162,18 +177,20 @@ public class DatabaseLayer {
 
             int addRows = preparedStatement.executeUpdate();
             if(addRows > 0) {
-                user = new User();
-                user.setName(name);
-                user.setEmail(email);
-                user.setPhone(phone);
-                user.setAddress(address);
+                customer = new Models.Customer();
+                customer.setName(name);
+                customer.setEmail(email);
+                customer.setPhone(phone);
+                customer.setAddress(address);
             }
         } catch(SQLException e) {
             e.printStackTrace();
         }
 
-        return user;
+        return customer;
     }
+
+    @Deprecated
     public static String getCustomerEmail(int customerId) {
         String email = null;
         try (Connection conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {

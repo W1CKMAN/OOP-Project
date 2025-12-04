@@ -6,27 +6,26 @@ import Models.Job;
 import java.util.List;
 
 public class JobController {
-    private static JobDatabase jobDatabase;
 
-    public JobController(JobDatabase jobDatabase) {
-        this.jobDatabase = jobDatabase;
+    public JobController() {
+        // Default constructor
     }
 
     public static void addJob(Job job) {
         // Validation logic if needed
-        jobDatabase.saveJob(job);
+        JobDatabase.saveJob(job);
     }
 
     public static void updateJob(Job job) {
         // Validation logic if needed
-        jobDatabase.updateJob(job);
+        JobDatabase.updateJob(job);
     }
 
     public static void removeJob(int jobId) {
-        jobDatabase.deleteJob(jobId);
+        JobDatabase.deleteJob(jobId);
     }
 
-    public List<Job> getAllJobs() {
-        return jobDatabase.getAllJobs();
+    public static List<Job> getAllJobs() {
+        return JobDatabase.getAllJobs();
     }
 }

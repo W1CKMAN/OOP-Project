@@ -5,28 +5,28 @@ import DatabaseConnection.DatabaseLayer;
 
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class OrderManagementController {
-    private static DatabaseLayer databaseLayer;
 
-    public OrderManagementController(DatabaseLayer databaseLayer) {
-        this.databaseLayer = databaseLayer;
+    public OrderManagementController() {
+        // Default constructor
     }
 
     public static void addOrder(Order order) {
         // Validation logic if needed
-        databaseLayer.saveOrder(order);
+        DatabaseLayer.saveOrder(order);
     }
 
     public static void updateOrder(Order order) {
         // Validation logic if needed
-        databaseLayer.updateOrder(order);
+        DatabaseLayer.updateOrder(order);
     }
 
     public static void removeOrder(int orderId) {
-        databaseLayer.deleteOrder(orderId);
+        DatabaseLayer.deleteOrder(orderId);
     }
 
-    public List<Order> getAllOrders() {
-        return databaseLayer.getAllOrders();
+    public static List<Order> getAllOrders() {
+        return DatabaseLayer.getAllOrders();
     }
 }
